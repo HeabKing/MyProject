@@ -1,0 +1,64 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF.Utility.CS.ttinclude"#>// ReSharper disable InconsistentNaming
+<#@ output extension=".cs"#>
+<#
+
+CodeGenerationTools code = new CodeGenerationTools(this);
+MetadataLoader loader = new MetadataLoader(this);
+CodeRegion region = new CodeRegion(this, 1);
+MetadataTools ef = new MetadataTools(this);
+
+string inputFile = @"..\Model\EfModel.edmx";
+
+EdmItemCollection ItemCollection = loader.CreateEdmItemCollection(inputFile);
+string namespaceName = code.VsNamespaceSuggestion();
+
+EntityFrameworkTemplateFileManager fileManager = EntityFrameworkTemplateFileManager.Create(this);
+
+#>
+using System.Runtime.Remoting.Messaging;
+
+
+namespace Dal
+{
+	/// <summary>
+	/// 1. 线程共享 2. 不用每次new表实体 3. 有条理
+	/// </summary>
+	public class DalSession
+	{
+		<#
+		int num = 0;
+		// Emit Entity Types
+		foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
+		{ 
+		num++;
+#>
+#region  <#=num.ToString("00")#>. <#=entity.Name#>Dal
+		<#=entity.Name#>Dal _<#=entity.Name#>Dal;
+		public <#=entity.Name#>Dal <#=entity.Name#>Dal => _<#=entity.Name#>Dal ?? (_<#=entity.Name#>Dal = new <#=entity.Name#>Dal()); 
+	
+		#endregion
+
+		<#}#>   
+
+		#region	Current
+		public static DalSession Current
+		{
+			get
+			{
+				var current = CallContext.GetData(typeof(DalSession).Name) as DalSession;
+				if (current == null)
+				{
+					current = new DalSession();
+					CallContext.SetData(typeof(DalSession).Name, current);
+				}
+				return current;
+			}
+		}
+		#endregion
+
+		#region	Private Metohd
+		private DalSession(){}
+		#endregion
+	}
+}
