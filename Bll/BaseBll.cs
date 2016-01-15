@@ -282,9 +282,9 @@ namespace Bll
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		public async Task<T> AddAsync(T model)
+		public Task<T> AddAsync(T model)
 		{
-			return await XxDal.AddAsync(model);
+			return XxDal.AddAsync(model);
 		}
 
 		#endregion
@@ -295,9 +295,9 @@ namespace Bll
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		public async Task<int> DelAsync(T model)
+		public Task<int> DelAsync(T model)
 		{
-			return await XxDal.DelAsync(model);
+			return XxDal.DelAsync(model);
 		}
 
 		/// <summary>
@@ -305,9 +305,9 @@ namespace Bll
 		/// </summary>
 		/// <param name="primaryKey"></param>
 		/// <returns>成功: 1 失败: 异常</returns>
-		public async Task<int> DelAsync(object primaryKey)
+		public Task<int> DelAsync(object primaryKey)
 		{
-			return await XxDal.DelAsync(primaryKey);
+			return XxDal.DelAsync(primaryKey);
 		}
 		#endregion
 
@@ -318,9 +318,9 @@ namespace Bll
 		/// </summary>
 		/// <param name="predicate"></param>
 		/// <returns></returns>
-		public async Task<int> DelAsync(Expression<Func<T, bool>> predicate)
+		public Task<int> DelAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await XxDal.DelAsync(predicate);
+			return XxDal.DelAsync(predicate);
 		}
 		#endregion
 
@@ -333,9 +333,9 @@ namespace Bll
 		/// <param name="key">主键</param>
 		/// <param name="updateProNames">要修改的属性名</param>
 		/// <returns></returns>
-		public async Task<int> UpdateAsync(object key, T mdl, params string[] updateProNames)
+		public Task<int> UpdateAsync(object key, T mdl, params string[] updateProNames)
 		{
-			return await XxDal.UpdateAsync(key, mdl, updateProNames);
+			return XxDal.UpdateAsync(key, mdl, updateProNames);
 		}
 
 		#region 该 - 一个实体 - 直接更改
@@ -376,9 +376,9 @@ namespace Bll
 		/// <param name="mdl"></param>
 		/// <param name="updateProNames"></param>
 		/// <returns></returns>
-		public async Task<int> UpdateAsync(Expression<Func<T, bool>> predicate, T mdl, params string[] updateProNames)
+		public Task<int> UpdateAsync(Expression<Func<T, bool>> predicate, T mdl, params string[] updateProNames)
 		{
-			return await XxDal.UpdateAsync(predicate, mdl, updateProNames);
+			return XxDal.UpdateAsync(predicate, mdl, updateProNames);
 		}
 		#endregion
 
@@ -389,9 +389,9 @@ namespace Bll
 		/// </summary>
 		/// <param name="primaryKey">主键</param>
 		/// <returns>实体/null</returns>
-		public async Task<T> FindAsync(object primaryKey)
+		public Task<T> FindAsync(object primaryKey)
 		{
-			return await XxDal.FindAsync(primaryKey);
+			return XxDal.FindAsync(primaryKey);
 		}
 
 		/// <summary>
@@ -399,18 +399,18 @@ namespace Bll
 		/// </summary>
 		/// <param name="predicate">给定一个谓词</param>
 		/// <returns>实体/异常(零个/多个)</returns>
-		public async Task<T> SingleAsync(Expression<Func<T, bool>> predicate)
+		public Task<T> SingleAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await XxDal.SingleAsync(predicate);
+			return XxDal.SingleAsync(predicate);
 		}
 
 		/// <summary>
 		/// 获取实体 - 唯一或不存在的实体
 		/// </summary>
 		/// <returns>实体(一个)/null(零个)/异常(多个)</returns>
-		public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate)
+		public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await XxDal.SingleOrDefaultAsync(predicate);
+			return XxDal.SingleOrDefaultAsync(predicate);
 		}
 
 		/// <summary>
@@ -418,9 +418,9 @@ namespace Bll
 		/// </summary>
 		/// <param name="predicate">给定谓词</param>
 		/// <returns>实体: 第一个; 异常: 零个</returns>
-		public async Task<T> FirstAsync(Expression<Func<T, bool>> predicate)
+		public Task<T> FirstAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await XxDal.FirstAsync(predicate);
+			return XxDal.FirstAsync(predicate);
 		}
 
 		/// <summary>
@@ -429,27 +429,27 @@ namespace Bll
 		/// <param name="predicate">给定谓词</param>
 		/// <param name="order">排序</param>
 		/// <returns>实体: 第一个; 异常: 零个</returns>
-		public async Task<T> FirstAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> order)
+		public Task<T> FirstAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> order)
 		{
-			return await XxDal.FirstAsync(predicate, order);
+			return XxDal.FirstAsync(predicate, order);
 		}
 
 		/// <summary>
 		/// 获取实体 - 第一个或不存在的实体
 		/// </summary>
 		/// <returns>实体: 第一个; null: 零个</returns>
-		public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+		public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await XxDal.FirstOrDefaultAsync(predicate);
+			return XxDal.FirstOrDefaultAsync(predicate);
 		}
 
 		/// <summary>
 		/// 获取实体 - 按指定顺序排序 - 第一个或不存在的实体
 		/// </summary>
 		/// <returns>实体: 第一个; null: 零个</returns>
-		public async Task<T> FirstOrDefaultAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> order)
+		public Task<T> FirstOrDefaultAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> order)
 		{
-			return await XxDal.FirstOrDefaultAsync(predicate, order);
+			return XxDal.FirstOrDefaultAsync(predicate, order);
 		}
 
 		#endregion
@@ -460,9 +460,9 @@ namespace Bll
 		/// </summary>
 		/// <param name="predicate"></param>
 		/// <returns></returns>
-		public async Task<List<T>> GetListAsync(Expression<Func<T, bool>> predicate)
+		public Task<List<T>> GetListAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await XxDal.GetListAsync(predicate);
+			return XxDal.GetListAsync(predicate);
 		}
 
 		/// <summary>
@@ -472,9 +472,9 @@ namespace Bll
 		/// <param name="predicate">查询条件</param>
 		/// <param name="orderLambda">排序条件</param>
 		/// <returns></returns>
-		public async Task<List<T>> GetListAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderLambda)
+		public Task<List<T>> GetListAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderLambda)
 		{
-			return await XxDal.GetListAsync(predicate, orderLambda);
+			return XxDal.GetListAsync(predicate, orderLambda);
 		}
 
 		/// <summary>
@@ -486,9 +486,9 @@ namespace Bll
 		/// <param name="predicate">谓词</param>
 		/// <param name="orderBy">排序lambda</param>
 		/// <returns></returns>
-		public async Task<List<T>> GetListAsync<TKey>(int pageIndex, int pageSize, Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderBy)
+		public Task<List<T>> GetListAsync<TKey>(int pageIndex, int pageSize, Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderBy)
 		{
-			return await XxDal.GetListAsync(pageIndex, pageSize, predicate, orderBy);
+			return XxDal.GetListAsync(pageIndex, pageSize, predicate, orderBy);
 		}
 
 		///// <summary>
@@ -513,12 +513,12 @@ namespace Bll
 		/// 获取数据库时间
 		/// </summary>
 		/// <returns></returns>
-		public async Task<DateTime> GetTimeAsync()
+		public Task<DateTime> GetTimeAsync()
 		{
-			return await XxDal.GetTimeAsync();
+			return XxDal.GetTimeAsync();
 		}
 
-		#endregion 
+		#endregion
 
 		#endregion
 	}

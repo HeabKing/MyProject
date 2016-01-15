@@ -359,11 +359,11 @@ namespace Dal
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		public async Task<int> DelAsync(T model)
+		public Task<int> DelAsync(T model)
 		{
 			_dbContext.Set<T>().Attach(model); // 将实体以Unchanged状态添加到上下文
 			_dbContext.Set<T>().Remove(model);
-			return await _dbContext.SaveChangesAsync();
+			return _dbContext.SaveChangesAsync();
 		}
 
 		/// <summary>
@@ -386,11 +386,11 @@ namespace Dal
 		/// </summary>
 		/// <param name="predicate"></param>
 		/// <returns></returns>
-		public async Task<int> DelAsync(Expression<Func<T, bool>> predicate)
+		public Task<int> DelAsync(Expression<Func<T, bool>> predicate)
 		{
 			var set = _dbContext.Set<T>().Where(predicate);
 			_dbContext.Set<T>().RemoveRange(set);
-			return await _dbContext.SaveChangesAsync();
+			return _dbContext.SaveChangesAsync();
 			//await _db.Set<T>().Where(predicate).ForEachAsync(m => _db.Set<T>().Remove(m));
 			//return await _db.SaveChangesAsync();
 		}
@@ -509,9 +509,9 @@ namespace Dal
 		/// </summary>
 		/// <param name="primaryKey">主键</param>
 		/// <returns>实体/null</returns>
-		public async Task<T> FindAsync(object primaryKey)
+		public Task<T> FindAsync(object primaryKey)
 		{
-			return await _dbContext.Set<T>().FindAsync(primaryKey);
+			return _dbContext.Set<T>().FindAsync(primaryKey);
 		}
 
 		/// <summary>
@@ -519,18 +519,18 @@ namespace Dal
 		/// </summary>
 		/// <param name="predicate">给定一个谓词</param>
 		/// <returns>实体/异常(零个/多个)</returns>
-		public async Task<T> SingleAsync(Expression<Func<T, bool>> predicate)
+		public Task<T> SingleAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await _dbContext.Set<T>().SingleAsync(predicate);
+			return _dbContext.Set<T>().SingleAsync(predicate);
 		}
 
 		/// <summary>
 		/// 获取实体 - 唯一或不存在的实体
 		/// </summary>
 		/// <returns>实体(一个)/null(零个)/异常(多个)</returns>
-		public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate)
+		public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await _dbContext.Set<T>().SingleOrDefaultAsync(predicate);
+			return _dbContext.Set<T>().SingleOrDefaultAsync(predicate);
 		}
 
 		/// <summary>
@@ -538,9 +538,9 @@ namespace Dal
 		/// </summary>
 		/// <param name="predicate">给定谓词</param>
 		/// <returns>实体: 第一个; 异常: 零个</returns>
-		public async Task<T> FirstAsync(Expression<Func<T, bool>> predicate)
+		public Task<T> FirstAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await _dbContext.Set<T>().FirstAsync(predicate);
+			return _dbContext.Set<T>().FirstAsync(predicate);
 		}
 
 		/// <summary>
@@ -549,27 +549,27 @@ namespace Dal
 		/// <param name="predicate">给定谓词</param>
 		/// <param name="order">排序</param>
 		/// <returns>实体: 第一个; 异常: 零个</returns>
-		public async Task<T> FirstAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> order)
+		public Task<T> FirstAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> order)
 		{
-			return await _dbContext.Set<T>().OrderBy(order).FirstAsync(predicate);
+			return _dbContext.Set<T>().OrderBy(order).FirstAsync(predicate);
 		}
 
 		/// <summary>
 		/// 获取实体 - 第一个或不存在的实体
 		/// </summary>
 		/// <returns>实体: 第一个; null: 零个</returns>
-		public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+		public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await _dbContext.Set<T>().FirstOrDefaultAsync(predicate);
+			return _dbContext.Set<T>().FirstOrDefaultAsync(predicate);
 		}
 
 		/// <summary>
 		/// 获取实体 - 按指定顺序排序 - 第一个或不存在的实体
 		/// </summary>
 		/// <returns>实体: 第一个; null: 零个</returns>
-		public async Task<T> FirstOrDefaultAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> order)
+		public Task<T> FirstOrDefaultAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> order)
 		{
-			return await _dbContext.Set<T>().OrderBy(order).FirstOrDefaultAsync(predicate);
+			return _dbContext.Set<T>().OrderBy(order).FirstOrDefaultAsync(predicate);
 		}
 
 		#endregion
@@ -580,9 +580,9 @@ namespace Dal
 		/// </summary>
 		/// <param name="predicate"></param>
 		/// <returns></returns>
-		public async Task<List<T>> GetListAsync(Expression<Func<T, bool>> predicate)
+		public Task<List<T>> GetListAsync(Expression<Func<T, bool>> predicate)
 		{
-			return await _dbContext.Set<T>().Where(predicate).ToListAsync();
+			return _dbContext.Set<T>().Where(predicate).ToListAsync();
 			//不进行缓存的查询
 			//return await _db.Set<T>().Where(predicate).AsNoTracking().ToListAsync();
 		}
@@ -594,9 +594,9 @@ namespace Dal
 		/// <param name="predicate">查询条件</param>
 		/// <param name="orderLambda">排序条件</param>
 		/// <returns></returns>
-		public async Task<List<T>> GetListAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderLambda)
+		public Task<List<T>> GetListAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderLambda)
 		{
-			return await _dbContext.Set<T>()
+			return _dbContext.Set<T>()
 				.Where(predicate)
 				.OrderBy(orderLambda)
 				.ToListAsync();
@@ -611,9 +611,9 @@ namespace Dal
 		/// <param name="predicate">谓词</param>
 		/// <param name="orderBy">排序lambda</param>
 		/// <returns></returns>
-		public async Task<List<T>> GetListAsync<TKey>(int pageIndex, int pageSize, Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderBy)
+		public Task<List<T>> GetListAsync<TKey>(int pageIndex, int pageSize, Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderBy)
 		{
-			return await _dbContext.Set<T>()
+			return _dbContext.Set<T>()
 				.Where(predicate)
 				.OrderBy(orderBy)
 				.Skip((pageIndex - 1) * pageSize)
@@ -643,13 +643,14 @@ namespace Dal
 		/// 获取数据库时间
 		/// </summary>
 		/// <returns></returns>
-		public async Task<DateTime> GetTimeAsync()
+		public Task<DateTime> GetTimeAsync()
 		{
 			// 加上.FirstOrDefault是为了针对延迟加载
-			return await Task.Run(() => _dbContext.Database.SqlQuery<DateTime>("SELECT GETDATE()").FirstOrDefault());
+			return Task.Run(() => _dbContext.Database.SqlQuery<DateTime>("SELECT GETDATE()").FirstOrDefault());
 		}
 
-		#endregion 
+		#endregion
+
 		#endregion
 	}
 }
